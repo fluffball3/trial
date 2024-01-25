@@ -1,0 +1,85 @@
+name: Rec0very Build v2.o
+
+on:
+  workflow_dispatch:
+    inputs:
+      MANIFEST_URL:
+        description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
+        required: true
+        default: 'https://github.com/'
+      BUILD_TARGET:
+        description: 'BUILD_TARGET'
+        required: true
+        default: 'Recovery'
+
+jobs:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps: 
+    - name: Maximize build space
+      uses: easimon/maximize-build-space@master
+
+          
+    - name: Check Out
+      uses: actions/checkout@main
+      
+        
+      
+    - name: dependencies
+      run: |
+        sudo apt install cpio make cmake git rsync gcc binutils clang 
+        wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
+        sudo apt install ./jdk-21_linux-x64_bin.deb
+    - name: additional
+      run: |
+        # Install dependencies for Ubuntu 18.04
+        sudo apt-get update
+        sudo apt install libmicrohttpd-dev libsqlite3-dev libarchive-dev automake autoconf gettext autopoint llvm lld libllvm12
+        # Clone, configure and build elfutils (use your own prefix instead of /tools/elfutils)
+        #git clone -b elfutils-0.189 https://sourceware.org/git/elfutils.git
+        #cd elfutils
+        #autoreconf -fi 
+        #mkdir build
+        #cd build
+        #../configure --prefix=/tools/elfutils --enable-maintainer-mode -disable-libdebuginfod --disable-debuginfod
+        #sudo make
+        #sudo make install
+        # Configure your environment
+        #export PATH=/tools/elfutils/bin:$PATH
+        #export LD_LIBRARY_PATH=/tools/elfutils/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+        #cd ../../
+        # Clone, configure and build pahole (use your own prefix instead of /tools/pahole)
+        #git clone -b v1.23 https://git.kernel.org/pub/scm/devel/pahole/pahole.git
+        #mkdir pahole/build
+        #cd pahole/build
+        #sudo cmake -G "Unix Makefiles"                             \
+        #          -D__LIB=lib                                      \
+        #          -DDWARF_INCLUDE_DIR=/tools/elfutils/include      \
+        #          -DLIBDW_INCLUDE_DIR=/tools/elfutils/include      \
+        #          -DDWARF_LIBRARY=/tools/elfutils/lib/libdw.so.1   \
+        #          -DELF_LIBRARY=/tools/elfutils/lib/libelf.so.1    \
+        #          -DCMAKE_INSTALL_PREFIX=/tools/pahole             \
+        #          ..
+        #sudo make install
+        # Configure your environment
+        #export PATH=/tools/pahole/bin:$PATH
+        #export LD_LIBRARY_PATH=/tools/pahole/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+        #cd ../../
+        # Clone and build bpftool (use your own prefix instead of /tools/bpftool)
+        #git clone --recurse-submodules https://github.com/libbpf/bpftool.git
+        #cd bpftool/src
+        #sudo make prefix=/tools/bpftool EXTRA_CFLAGS="-I/tools/elfutils/include" \
+         #                          EXTRA_LDFLAGS="-L/tools/elfutils/lib"    \
+         #                          install-bin
+        # Configure your environment
+        #export PATH=/tools/bpftool/sbin/:$PATH
+        
+    - name: kernel fuck
+      run: |
+        git clone https://github.com/fluffball3/twrpm33x
+        cd twrpm33x/samsung/m33x
+        sudo bash build_kernel.sh
