@@ -80,28 +80,27 @@ jobs:
         # Configure your environment
         #export PATH=/tools/bpftool/sbin/:$PATH
 
-    - name: repo
-      run: |
-        mkdir -p ~/.bin
-        PATH="${HOME}/.bin:${PATH}"
-        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-        chmod a+rx ~/.bin/repo
-        cd ~/.bin
-        repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
-        repo sync
+    #- name: repo
+     # run: |
+      #  mkdir -p ~/.bin
+       # PATH="${HOME}/.bin:${PATH}"
+        #curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+        #chmod a+rx ~/.bin/repo
+        #repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
+        #repo sync
         
     - name: kernel fuck
       run: |
-        mkdir device/samsung
-        cd device/samsung
+        #mkdir device/samsung
+        #cd device/samsung
         git clone https://github.com/fluffball3/twrpm33x
-        mv twrpm33x m33x
-        cd m33x
-        mv samsung ../../../kernel
-        #  sudo bash build_kernel.sh
-        cd ../../../
-        export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_m33x-eng
-        mka recoveryimage
+        #mv twrpm33x m33x
+        cd twrpm33x/samsung/m33x
+        #mv samsung ../../../kernel
+        sudo bash build_kernel.sh
+        #cd ../../../
+        #export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_m33x-eng
+        #mka recoveryimage
 
 
         
