@@ -19,9 +19,9 @@ jobs:
     permissions:
       contents: write
       
-    #steps: 
-    #- name: Maximize build space
-    #  uses: easimon/maximize-build-space@master
+    steps: 
+    # - name: Maximize build space
+     #  uses: easimon/maximize-build-space@master
 
           
     - name: Check Out
