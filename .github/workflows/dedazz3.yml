@@ -34,6 +34,7 @@ jobs:
         sudo apt install cpio make cmake git rsync gcc binutils clang 
         wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
         sudo apt install ./jdk-21_linux-x64_bin.deb
+        
     - name: additional
       run: |
         # Install dependencies for Ubuntu 18.04
@@ -79,11 +80,13 @@ jobs:
         # Configure your environment
         #export PATH=/tools/bpftool/sbin/:$PATH
 
-        mkdir -p ~/twrp
-        PATH="${HOME}/twrp:${PATH}"
-        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/twrp/repo
-        chmod a+rx ~/twrp/repo
-        cd ~/twrp
+    - name: repo
+      run: |
+        mkdir -p ~/.bin
+        PATH="${HOME}/.bin:${PATH}"
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+        chmod a+rx ~/.bin/repo
+        cd ~/.bin
         repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1
         repo sync
         
