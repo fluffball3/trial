@@ -15,7 +15,7 @@ on:
 jobs:
   build:
     if: github.event.repository.owner.id == github.event.sender.id
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       
@@ -39,7 +39,7 @@ jobs:
       run: |
         # Install dependencies for Ubuntu 18.04
         sudo apt-get update
-        sudo apt install libmicrohttpd-dev libsqlite3-dev libarchive-dev automake autoconf gettext autopoint llvm lld libllvm12
+        sudo apt install libmicrohttpd-dev libsqlite3-dev libarchive-dev automake autoconf gettext autopoint llvm lld libssl-dev
         
         # Clone, configure and build elfutils (use your own prefix instead of /tools/elfutils)
         #git clone -b elfutils-0.189 https://sourceware.org/git/elfutils.git
