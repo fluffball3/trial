@@ -40,7 +40,7 @@ loop1:
 	and	x2, x1, #7		// extract the length of the cache lines
 	add	x2, x2, #4		// add 4 (line length offset)
 
-	mrs     x14, id_aa64mmfr2_el1	// check architecture version
+	#mrs     x14, id_aa64mmfr2_el1	// check architecture version
 	mov     x15, #0xf
 	and     x15, x15, x14, lsr #20
 	cbz     x15, format_32bit
