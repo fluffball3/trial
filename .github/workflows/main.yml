@@ -106,5 +106,5 @@ jobs:
     - name: Upload Recovery
       uses: actions/upload-artifact@v3.0.0
       with:
-        path: ~/twrpm33x/samsung/m33x/kernel
+        path: ~/twrpm33x/samsung/m33x/mm/kernel
         name: kernel
